@@ -1,0 +1,16 @@
+{
+  "name": "eslint-plugin-runtime-internal",
+  "description": "Custom eslint rules for runtime.js internal code",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:runtimejs/eslint-plugin-runtime-internal.git"
+  },
+  "author": "runtime.js project authors",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/runtimejs/eslint-plugin-runtime-internal/issues"
+  },
+  "homepage": "http://runtimejs.org"
+}
