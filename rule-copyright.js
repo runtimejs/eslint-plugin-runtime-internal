@@ -1,7 +1,5 @@
-
-
 var requiredComment = [
-  /^Copyright [0-9-]+ runtime\.js project authors$/,
+  /^Copyright [0-9]{4}-present runtime\.js project authors$/,
   '',
   'Licensed under the Apache License, Version 2.0 (the "License");',
   'you may not use this file except in compliance with the License.',
@@ -26,6 +24,12 @@ module.exports = function(context) {
     return (typeof x === 'string') ? x.trim() : x;
   });
 
+  var extraOffset = 0;
+  if (comments.length > 0 && comments[0].type === 'Line' &&
+      comments[0].value === '/usr/bin/env node') {
+    extraOffset = 1;
+  }
+
   trimmed.forEach(function(line, index) {
     var match = comments.filter(function(comment) {
       if (comment.type !== 'Line') {
@@ -36,17 +40,17 @@ module.exports = function(context) {
       var value = comment.value.trim();
 
       if (line instanceof RegExp) {
-        return line.test(value) && startLine === index + 1;
+        return line.test(value) && startLine === index + 1 + extraOffset;
       }
 
-      return value === line && startLine === index + 1;
+      return value === line && startLine === index + 1 + extraOffset;
     });
 
     if (match.length !== 1) {
       return context.report({
         loc: {
-          start: { line: index + 1, column: 0 },
-          end: { line: index + 1, column: 0 }
+          start: { line: index + 1 + extraOffset, column: 0 },
+          end: { line: index + 1 + extraOffset, column: 0 }
         }
       }, 'missing copyright comment "// ' + String(requiredComment[index]) + '"');
     }
